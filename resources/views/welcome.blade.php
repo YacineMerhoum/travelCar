@@ -33,7 +33,7 @@
 
             <div class="max-w-7xl mx-auto p-6 lg:p-8">
                 <div class="flex justify-center">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo">
+                    <img src="{{ asset('images/logoTransparant.png') }}" alt="Logo">
 
                 </div>
 
