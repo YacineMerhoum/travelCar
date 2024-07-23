@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TripsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,4 +18,13 @@ Route::middleware(['auth:sanctum', 'role'])->group(function () {
     Route::get('users/{id}', [UserController::class, 'show']);
     Route::put('users/{id}', [UserController::class, 'update']);
     Route::delete('users/{id}', [UserController::class, 'destroy']);
+});
+
+Route::middleware(['auth:sanctum', 'trips'])->group(function () {
+
+    Route::get('trips', [TripsController::class, 'index']);
+    Route::get('trips/{id}', [TripsController::class, 'show']);
+    Route::post('trips', [TripsController::class, 'store']);
+    Route::put('trips/{id}', [TripsController::class, 'update']);
+    Route::delete('trips/{id}', [TripsController::class, 'destroy']);
 });
