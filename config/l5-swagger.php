@@ -10,7 +10,10 @@ return [
 
             'routes' => [
                 'docs' => storage_path('api-docs'),
-                'annotations' => base_path('app'),
+                'annotations' => [
+                    base_path('app'),
+                    base_path('app/Documentation'), 
+                ],
                 'assets' => public_path('vendor/l5-swagger'),
                 'views' => base_path('resources/views/vendor/l5-swagger'),
                 'base' => env('L5_SWAGGER_BASE_PATH', null),
