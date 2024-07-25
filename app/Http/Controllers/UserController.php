@@ -7,7 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Response;
 
-
+/**
+ * @OA\Tag(
+ *     name="Users",
+ *     description="API Endpoints for Managing Users"
+ * )
+ */
 class UserController extends Controller
 {
     /**
@@ -77,6 +82,7 @@ class UserController extends Controller
      *             @OA\Property(property="firstname", type="string"),
      *             @OA\Property(property="email", type="string"),
      *             @OA\Property(property="password", type="string"),
+     *             @OA\Property(property="password_confirmation", type="string"),
      *             @OA\Property(property="role", type="string"),
      *             @OA\Property(property="avatar", type="string", nullable=true),
      *         )
@@ -99,6 +105,7 @@ class UserController extends Controller
             'firstname' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
+            'password_confirmation' => 'required|string|min:8',
             'role' => 'nullable|string',
             'avatar' => 'nullable|string',
         ]);
@@ -129,6 +136,7 @@ class UserController extends Controller
      *             @OA\Property(property="firstname", type="string", nullable=true),
      *             @OA\Property(property="email", type="string", nullable=true),
      *             @OA\Property(property="password", type="string", nullable=true),
+     *             @OA\Property(property="password_confirmation", type="string", nullable=true),
      *             @OA\Property(property="role", type="string", nullable=true),
      *             @OA\Property(property="avatar", type="string", nullable=true),
      *         )
@@ -156,6 +164,7 @@ class UserController extends Controller
             'firstname' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255|unique:users,email,' . $id,
             'password' => 'nullable|string|confirmed|min:8',
+            'password_confirmation' => 'nullable|string|min:8',
             'role' => 'nullable|string',
             'avatar' => 'nullable|string',
         ]);
