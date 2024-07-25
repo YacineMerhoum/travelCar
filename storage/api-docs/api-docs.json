@@ -216,7 +216,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Trip"
+                                        "$ref": "#/components/schemas/Trips"
                                     }
                                 }
                             }
@@ -281,7 +281,22 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Trip"
+                                    "$ref": "#/components/schemas/Trips"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -312,7 +327,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Trip"
+                                    "$ref": "#/components/schemas/Trips"
                                 }
                             }
                         }
@@ -378,7 +393,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Trip"
+                                    "$ref": "#/components/schemas/Trips"
                                 }
                             }
                         }
@@ -636,8 +651,7 @@
     },
     "components": {
         "schemas": {
-            "Trip": {
-                "title": "Trip",
+            "Trips": {
                 "required": [
                     "starting_point",
                     "ending_point",
@@ -648,34 +662,34 @@
                 ],
                 "properties": {
                     "id": {
-                        "type": "integer",
-                        "example": 1
+                        "description": "ID of the trip",
+                        "type": "integer"
                     },
                     "starting_point": {
-                        "type": "string",
-                        "example": "New York"
+                        "description": "Starting point of the trip",
+                        "type": "string"
                     },
                     "ending_point": {
-                        "type": "string",
-                        "example": "Los Angeles"
+                        "description": "Ending point of the trip",
+                        "type": "string"
                     },
                     "starting_at": {
+                        "description": "Starting date and time of the trip",
                         "type": "string",
-                        "format": "date-time",
-                        "example": "2024-07-22T10:00:00Z"
+                        "format": "date-time"
                     },
                     "available_places": {
-                        "type": "integer",
-                        "example": 3
+                        "description": "Number of available places",
+                        "type": "integer"
                     },
                     "price": {
+                        "description": "Price of the trip",
                         "type": "number",
-                        "format": "float",
-                        "example": 99.99
+                        "format": "float"
                     },
                     "user_id": {
-                        "type": "integer",
-                        "example": 1
+                        "description": "ID of the user who created the trip",
+                        "type": "integer"
                     }
                 },
                 "type": "object"

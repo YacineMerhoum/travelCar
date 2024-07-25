@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Trip;
+use App\Models\Trips;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use OpenApi\Annotations as OA;
 
 /**
@@ -22,13 +23,14 @@ class TripsController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="List of trips",
-     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Trip"))
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Trips"))
      *     )
      * )
      */
     public function index()
     {
-        // Implementation here
+        $trips = Trips::all();
+        return response()->json($trips);
     }
 
     /**
@@ -51,13 +53,30 @@ class TripsController extends Controller
      *     @OA\Response(
      *         response=201,
      *         description="Trip created successfully",
-     *         @OA\JsonContent(ref="#/components/schemas/Trip")
+     *         @OA\JsonContent(ref="#/components/schemas/Trips")
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="errors", type="object")
+     *         )
      *     )
      * )
      */
     public function store(Request $request)
     {
-        // Implementation here
+        $validatedData = $request->validate([
+            'starting_point' => 'required|string',
+            'ending_point' => 'required|string',
+            'starting_at' => 'required|date',
+            'available_places' => 'required|integer',
+            'price' => 'required|numeric',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        $trip = Trips::create($validatedData);
+        return response()->json($trip, 201);
     }
 
     /**
@@ -74,7 +93,7 @@ class TripsController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Trip details",
-     *         @OA\JsonContent(ref="#/components/schemas/Trip")
+     *         @OA\JsonContent(ref="#/components/schemas/Trips")
      *     ),
      *     @OA\Response(
      *         response=404,
@@ -84,7 +103,12 @@ class TripsController extends Controller
      */
     public function show($id)
     {
-        // Implementation here
+        $trip = Trips::find($id);
+        if (!$trip) {
+            return response()->json(['message' => 'Trip not found'], 404);
+        }
+
+        return response()->json($trip);
     }
 
     /**
@@ -111,7 +135,7 @@ class TripsController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Trip updated successfully",
-     *         @OA\JsonContent(ref="#/components/schemas/Trip")
+     *         @OA\JsonContent(ref="#/components/schemas/Trips")
      *     ),
      *     @OA\Response(
      *         response=404,
@@ -121,7 +145,22 @@ class TripsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Implementation here
+        $trip = Trips::find($id);
+        if (!$trip) {
+            return response()->json(['message' => 'Trip not found'], 404);
+        }
+
+        $validatedData = $request->validate([
+            'starting_point' => 'sometimes|string',
+            'ending_point' => 'sometimes|string',
+            'starting_at' => 'sometimes|date',
+            'available_places' => 'sometimes|integer',
+            'price' => 'sometimes|numeric',
+            'user_id' => 'sometimes|exists:users,id',
+        ]);
+
+        $trip->update($validatedData);
+        return response()->json($trip);
     }
 
     /**
@@ -147,6 +186,12 @@ class TripsController extends Controller
      */
     public function destroy($id)
     {
-        // Implementation here
+        $trip = Trips::find($id);
+        if (!$trip) {
+            return response()->json(['message' => 'Trip not found'], 404);
+        }
+
+        $trip->delete();
+        return response()->json(['message' => 'Trip deleted successfully']);
     }
 }
