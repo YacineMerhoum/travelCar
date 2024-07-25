@@ -12,6 +12,6 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        'api/*', // Exclude all URIs under 'api' from CSRF verification
     ];
 }
