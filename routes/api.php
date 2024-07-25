@@ -13,20 +13,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Routes pour les voyages
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'role'])->group(function () {
+    Route::get('users', [UserController::class, 'index']);
+    Route::get('users/{id}', [UserController::class, 'show']);
+    Route::put('users/{id}', [UserController::class, 'update']);
+    Route::delete('users/{id}', [UserController::class, 'destroy']);
+});
+
+Route::middleware(['auth', 'trips'])->group(function () {
     Route::post('trips', [TripsController::class, 'store']);
-    Route::get('trips', [TripsController::class, 'index']);
-    Route::get('trips/{id}', [TripsController::class, 'show']);
-    Route::put('trips/{id}', [TripsController::class, 'update']);
-    Route::delete('trips/{id}', [TripsController::class, 'destroy']);
 });
-
-// Routes pour les utilisateurs
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('users', [UserController::class, 'index'])->middleware('can:admin-only');
-    Route::get('users/{id}', [UserController::class, 'show'])->middleware('can:view-user,id');
-    Route::put('users/{id}', [UserController::class, 'update'])->middleware('can:update-user,id');
-    Route::delete('users/{id}', [UserController::class, 'destroy'])->middleware('can:admin-only');
-});
-
