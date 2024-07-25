@@ -30,6 +30,7 @@ class TripsController extends Controller
             'starting_at' => 'required|date',
             'available_places' => 'required|integer',
             'price' => 'required|integer',
+
         ]);
 
         $trip = new Trips();

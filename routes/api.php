@@ -20,11 +20,6 @@ Route::middleware(['auth:sanctum', 'role'])->group(function () {
     Route::delete('users/{id}', [UserController::class, 'destroy']);
 });
 
-Route::middleware(['auth:sanctum', 'trips'])->group(function () {
-
-    Route::get('trips', [TripsController::class, 'index']);
-    Route::get('trips/{id}', [TripsController::class, 'show']);
+Route::middleware(['auth', 'trips'])->group(function () {
     Route::post('trips', [TripsController::class, 'store']);
-    Route::put('trips/{id}', [TripsController::class, 'update']);
-    Route::delete('trips/{id}', [TripsController::class, 'destroy']);
 });
