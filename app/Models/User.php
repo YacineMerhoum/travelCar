@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\HasName;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -50,7 +51,7 @@ use Laravel\Sanctum\HasApiTokens;
  *     )
  * )
  */
-class User extends Authenticatable
+class User extends Authenticatable implements HasName
 {
     use HasApiTokens, Notifiable;
 
@@ -91,5 +92,10 @@ class User extends Authenticatable
     public function hasRole($role)
     {
         return $this->role === $role;
+    }
+
+    public function getFilamentName(): string
+    {
+        return $this->getAttributeValue('lastname');
     }
 }

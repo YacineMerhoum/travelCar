@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models;
 
@@ -19,6 +19,13 @@ use Illuminate\Database\Eloquent\Model;
  *     @OA\Property(property="user_id", type="integer", description="ID of the user who created the trip")
  * )
  */
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+
 class Trips extends Model
 {
     use HasFactory;
